@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Projekt</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <div id="title">
+                    <i class="fas fa-paper-plane fa-lg"></i><b> Spambot</b>
+                </div>
+                <div id="title-buttons">
+                	 <div class="row">
+    					<div class="col">
+                    		<input type='number' class='form-control' name='ilosc' placeholder='Quantity'>
+                    	</div>
+                    	<div class="col">
+		                    <button type="button" class="form-control btn btn-primary">
+		                        SEND
+		                    </button>
+		                </div>
+		                <div class="col">
+		                    <button type="button" name='logout' class="form-control btn btn-danger">
+		                        LOGOUT
+		                    </button>
+		                </div>
+		            </div>
+                </div>
+            </nav>
+            <div class="container-fluid" style="height: 700px">
+                <div id="content-box">
+                    <h5>E-mail address</h5>
+                    <input type="Email" class="form-control" name="email" placeholder="example@example.com">
+                    </br>
+                    <h5>Text</h5>
+                    <textarea class="form-control" name="text" placeholder="Your message..." rows='20'></textarea>
+                    </br>
+                    <label for="Plik">Załączniki</label>
+                	</br>
+                    <input type="file" name='file 'class="form-control-file" id="Plik">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

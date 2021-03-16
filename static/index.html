@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Projekt</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <div id="title">
+                    <i class="fas fa-paper-plane fa-lg"></i><b> Spambot</b>
+                </div>
+                <div id="title-buttons">
+                	 <div class="row">
+                    	<div class="col">
+                            <button type="button" onclick="disable_login()" class="form-control btn btn-primary">
+                                REGISTER
+                            </button>
+		                </div>
+                        <div class="col">
+                            <button type="button" onclick="disable_register()" class="form-control btn btn-primary">
+                                LOGIN
+                            </button>
+                        </div>
+		            </div>
+                </div>
+            </nav>
+            <div class="container-fluid" style="height: 700px">
+                <div id="content-box">
+                    <div id="register">
+                        <form id='register_form' name="register_form">
+                            <h2>Register</h2>
+                            <h5>E-mail address</h5>
+                            <input type="Email" autocomplete="off" class="form-control" id="registerEmail" name="email" placeholder="example@example.com">
+                            </br>
+                            <h5>Password</h5>
+                            <input type='password' autocomplete="off" class="form-control" id="registerPassword" name="password" placeholder="Your password...">
+                            </br>
+                            <button type="submit" class="form-control btn btn-primary">
+                                REGISTER
+                            </button>
+                        </form>
+                    </div>
+                    <div id="login" hidden>
+                        <form id='login_form'>
+                            <h2>Login</h2>
+                            <h5>E-mail address</h5>
+                            <input type="Email" autocomplete="off" class="form-control" id="loginEmail" name="email_login" placeholder="example@example.com">
+                            </br>
+                            <h5>Password</h5>
+                            <input type='password' autocomplete="off" class="form-control" id="loginPassword" name="password_login" placeholder="Your password...">
+                            </br>
+                            <button type="submit" class="form-control btn btn-primary">
+                                LOGIN
+                            </button>
+                        </form>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-8">
+                            <div class="notification is-hidden is-light" id="addTaskMsg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    function disable_login(){
+        var login_elements = document.getElementById("login_form").elements;
+        var register_elements = document.getElementById("register_form").elements;
+        var div_login = document.getElementById("login")
+        var div_register = document.getElementById("register")
+        for(var i = 0; i < login_elements.length; i++)
+        {
+            login_elements[i].disabled = true;
+        }
+        for(var i = 0; i < register_elements.length; i++)
+        {
+            register_elements[i].disabled = false;
+        }
+        div_login.hidden = true;
+        div_register.hidden = false;
+    }
+    function disable_register(){
+        var login_elements = document.getElementById("login_form").elements;
+        var register_elements = document.getElementById("register_form").elements;
+        var div_login = document.getElementById("login")
+        var div_register = document.getElementById("register")
+        for(var i = 0; i < login_elements.length; i++)
+        {
+            login_elements[i].disabled = false;
+        }
+        for(var i = 0; i < register_elements.length; i++)
+        {
+            register_elements[i].disabled = true;
+        }
+        div_login.hidden = false;
+        div_register.hidden = true;
+    }
+
+    const RegisterForm = document.getElementById('register_form')
+    const LoginForm = document.getElementById('login_form')
+    RegisterForm.addEventListener('submit', registerUser)
+    LoginForm.addEventListener('submit', loginUser)
+
+    async function registerUser(event){
+        event.preventDefault()
+        const email = document.getElementById('registerEmail').value
+        const password = document.getElementById('registerPassword').value
+
+        const result = await fetch('/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        }).then((res) => res.json())
+
+        if(result.status === 'ok'){
+            alert('Użytkownik dodany!')
+        } else {
+            alert(result.error)
+        }
+    }
+
+    async function loginUser(event){
+        event.preventDefault()
+        const email = document.getElementById('loginEmail').value
+        const password = document.getElementById('loginPassword').value
+
+        const result = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        }).then((res) => res.json())
+
+        if(result.status === 'ok'){
+            alert('Użytkownik zalogowany!')
+            window.open('portal.html')
+        } else {
+            alert(result.error)
+        }
+    }
+
+</script>
