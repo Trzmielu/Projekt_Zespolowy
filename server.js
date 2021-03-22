@@ -17,7 +17,6 @@ mongoose.connect("mongodb://localhost:27017/SpamBotUsers", {
 const app = express()
 app.use('/', express.static(path.join(__dirname,'static')))
 
-
 app.use(bodyParser.json())
 
 app.post('/api/login',  async (req, res) => {
@@ -39,6 +38,9 @@ app.post('/api/login',  async (req, res) => {
 			},
 			JWT_SECRET
 		)
+		var newDate = new Date();
+	    var expDate = newDate.setMonth(newDate.getMonth() + 3)
+	    res.cookie('id' , token, { sameSite: true, maxAge: expDate });
 
 		return res.json({ status: 'ok', data: token})
 	}
@@ -76,6 +78,34 @@ app.post('/api/register', async (req, res) => {
 
 	res.json({ status: 'ok' })
 })
+
+app.post('/api/portal', authenticateRoute, function (req, res) {
+	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
+		if (err){
+			res.sendStatus(403)
+		}else {
+			res.json({ status: 'ok' })
+		}
+	})
+});
+
+app.get('/api/portal',authenticateRoute, function (req, res) {
+	res.redirect('/')
+});
+app.get('/style.css', function(req, res) {
+  res.sendFile(__dirname + "static/css");
+});
+
+function authenticateRoute(req,res,next){
+	const bearerHeader = req.headers.cookie
+	if(typeof bearerHeader !== 'undefined'){
+		const bearerToken = bearerHeader.split(' ')[5].slice(3)
+		req.token = bearerToken
+		next()
+	} else {
+		res.sendStatus(403)
+	}
+}
 
 app.listen(8080, () =>{
 	console.log('Server up at 8080')
