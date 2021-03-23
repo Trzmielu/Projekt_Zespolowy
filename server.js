@@ -15,7 +15,9 @@ mongoose.connect("mongodb://localhost:27017/SpamBotUsers", {
 })
 
 const app = express()
+
 app.use('/', express.static(path.join(__dirname,'static')))
+app.use(express.static(__dirname + '/static/'))
 
 app.use(bodyParser.json())
 
@@ -39,7 +41,7 @@ app.post('/api/login',  async (req, res) => {
 			JWT_SECRET
 		)
 		var newDate = new Date();
-	    var expDate = newDate.setMonth(newDate.getMonth() + 3)
+	    var expDate = newDate.setMinutes(newDate.getMinutes() + 10)
 	    res.cookie('id' , token, { sameSite: true, maxAge: expDate });
 
 		return res.json({ status: 'ok', data: token})
@@ -90,20 +92,43 @@ app.post('/api/portal', authenticateRoute, function (req, res) {
 });
 
 app.get('/api/portal',authenticateRoute, function (req, res) {
-	res.redirect('/')
+	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
+		if (err){
+			res.redirect('/')
+		}else {
+			res.sendFile(path.join(__dirname,'./private/portal.html'));
+		}
+	})
 });
-app.get('/style.css', function(req, res) {
-  res.sendFile(__dirname + "static/css");
+
+app.post('/api/logout', authenticateRoute, function (req, res) {
+	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
+		if (err){
+			res.sendStatus(403)
+		}else {
+			res.json({ status: 'ok' })
+		}
+	})
+});
+
+app.get('/portal.html',authenticateRoute, function (req, res) {
+	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
+		if (err){
+			res.redirect('/')
+		}else {
+			res.sendFile(path.join(__dirname,'./private/portal.html'));
+		}
+	})
 });
 
 function authenticateRoute(req,res,next){
-	const bearerHeader = req.headers.cookie
+	const bearerHeader = req.headers.cookie.split(' ')[5]
 	if(typeof bearerHeader !== 'undefined'){
-		const bearerToken = bearerHeader.split(' ')[5].slice(3)
+		const bearerToken = bearerHeader.slice(3)
 		req.token = bearerToken
 		next()
 	} else {
-		res.sendStatus(403)
+		res.status(403).redirect('/')
 	}
 }
 

@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Projekt</title>
+    <base href="/">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,14 +26,16 @@
                     		<input type='number' class='form-control' name='ilosc' placeholder='Quantity'>
                     	</div>
                     	<div class="col">
-		                    <button type="button" class="form-control btn btn-primary">
+		                    <button type="submit" class="form-control btn btn-primary">
 		                        SEND
 		                    </button>
 		                </div>
 		                <div class="col">
-		                    <button type="button" name='logout' class="form-control btn btn-danger">
-		                        LOGOUT
-		                    </button>
+                            <form id='logoutForm'>
+    		                    <button type="submit" class="form-control btn btn-danger">
+    		                        LOGOUT
+    		                    </button>
+                            </form>
 		                </div>
 		            </div>
                 </div>
@@ -55,3 +58,30 @@
 </body>
 </html>
 
+
+<script type="text/javascript">
+    const logoutForm = document.getElementById('logoutForm')
+    logoutForm.addEventListener('submit', LogoutUser)
+
+    async function LogoutUser(event){
+        event.preventDefault()
+        const result = await fetch('/api/logout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => res.json())
+
+        if(result.status === "ok"){
+            if(document.cookie = 'id'+'=; Max-Age=-99999999;'){
+                window.open('../',"_self")
+            }
+            else{
+                alert("Błąd")
+            }
+        }
+        else{
+            alert(result.error)
+        }
+    }
+</script>
