@@ -96,7 +96,7 @@ app.get('/api/portal',authenticateRoute, function (req, res) {
 		if (err){
 			res.redirect('/')
 		}else {
-			res.sendFile(path.join(__dirname,'./private/portal.html'));
+			res.redirect('/portal.html')
 		}
 	})
 });
