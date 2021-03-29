@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
 
 const JWT_SECRET = 'sdawfawdfnbawikufbawifbvakwbfikuasbvdiuviwuavdi1232131!#@@!$1'
 
-mongoose.connect("mongodb://localhost:27017/SpamBotUsers", {
+mongoose.connect(process.env.COSMOS_DB_URI || "mongodb://localhost:27017/SpamBotUsers", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true
