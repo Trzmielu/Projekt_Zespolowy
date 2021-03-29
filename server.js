@@ -16,7 +16,7 @@ mongoose.connect(process.env.COSMOS_DB_URI || "mongodb://localhost:27017/SpamBot
 
 const app = express()
 
-app.use('/', express.static(path.join(__dirname,'static')))
+// app.use('/', express.static(path.join(__dirname,'static')))
 app.use(express.static(__dirname + '/static/'))
 
 app.use(bodyParser.json())
