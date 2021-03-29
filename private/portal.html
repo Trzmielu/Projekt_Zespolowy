@@ -22,8 +22,11 @@
                 </div>
                 <div id="title-buttons">
                 	 <div class="row">
+                        <div class="col">
+                            <input type='time' class='form-control' name='czas' required>
+                        </div>
     					<div class="col">
-                    		<input type='number' class='form-control' name='ilosc' placeholder='Quantity'>
+                    		<input type='number' class='form-control' name='ilosc' placeholder='Quantity' required>
                     	</div>
                     	<div class="col">
 		                    <button type="submit" class="form-control btn btn-primary">
@@ -43,10 +46,10 @@
             <div class="container-fluid" style="height: 700px">
                 <div id="content-box">
                     <h5>E-mail address</h5>
-                    <input type="Email" class="form-control" name="email" placeholder="example@example.com">
+                    <input type="Email" class="form-control" name="email" placeholder="example@example.com" required>
                     </br>
                     <h5>Text</h5>
-                    <textarea class="form-control" name="text" placeholder="Your message..." rows='20'></textarea>
+                    <textarea class="form-control" name="text" placeholder="Your message..." rows='20' required></textarea>
                     </br>
                     <label for="Plik">Załączniki</label>
                 	</br>

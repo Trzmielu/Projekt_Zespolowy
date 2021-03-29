@@ -21,7 +21,7 @@ mongoose.connect("mongodb://"+process.env.COSMOSDB_HOST+":"+process.env.COSMOSDB
 
 const app = express()
 
-// app.use('/', express.static(path.join(__dirname,'static')))
+app.use('/', express.static(path.join(__dirname,'static')))
 app.use(express.static(__dirname + '/static/'))
 
 app.use(bodyParser.json())
