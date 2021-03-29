@@ -127,9 +127,15 @@ app.get('/portal.html',authenticateRoute, function (req, res) {
 });
 
 function authenticateRoute(req,res,next){
-	const bearerHeader = req.headers.cookie.split(' ')[5]
-	if(typeof bearerHeader !== 'undefined'){
-		const bearerToken = bearerHeader.slice(3)
+	const bearerHeader = req.headers.cookie.split(';')
+	const parsedCookies = {};
+	bearerHeader.forEach(bearerHead=>{
+	const parsedCookie = bearerHead.split('=');
+	  	parsedCookies[parsedCookie[0]] = parsedCookie[1];
+	});
+
+	if(typeof parsedCookies[" id"] !== 'undefined'){
+		const bearerToken = parsedCookies[" id"]
 		req.token = bearerToken
 		next()
 	} else {
