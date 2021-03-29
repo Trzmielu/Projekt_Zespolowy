@@ -2,13 +2,18 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const env = require('dotenv').config();
 const User = require('./model/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const JWT_SECRET = 'sdawfawdfnbawikufbawifbvakwbfikuasbvdiuviwuavdi1232131!#@@!$1'
 
-mongoose.connect(process.env.COSMOS_DB_URI || "mongodb://localhost:27017/SpamBotUsers", {
+mongoose.connect("mongodb://"+process.env.COSMOSDB_HOST+":"+process.env.COSMOSDB_PORT+"/"+process.env.COSMOSDB_DBNAME+"?ssl=true&replicaSet=globaldb" || "mongodb://localhost:27017/SpamBotUsers", {
+  auth: {
+    user: process.env.COSMOSDB_USER,
+    password: process.env.COSMOSDB_PASSWORD
+  }, 
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true
