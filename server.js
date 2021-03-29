@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 
 const JWT_SECRET = 'sdawfawdfnbawikufbawifbvakwbfikuasbvdiuviwuavdi1232131!#@@!$1'
 
-mongoose.connect("mongodb://"+process.env.COSMOSDB_HOST+":"+process.env.COSMOSDB_PORT+"/"+process.env.COSMOSDB_DBNAME+"?ssl=true&replicaSet=globaldb" || "mongodb://localhost:27017/SpamBotUsers", {
+mongoose.connect("mongodb://"+process.env.COSMOSDB_HOST+":"+process.env.COSMOSDB_PORT+"/"+process.env.COSMOSDB_DBNAME+"?ssl=true&replicaSet=globaldb&retrywrites=false" || "mongodb://localhost:27017/SpamBotUsers", {
   auth: {
     user: process.env.COSMOSDB_USER,
     password: process.env.COSMOSDB_PASSWORD
