@@ -11,6 +11,7 @@
 - express
 - jsonwebtoken
 - mongoose
+- mailgun-js
 
 ## Link do Azure App Service
 ### https://spamboot.azurewebsites.net/
