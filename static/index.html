@@ -157,7 +157,7 @@
 
         if(result.status === 'ok'){
             alert('Użytkownik zalogowany!')
-            window.open('portal.html',"_self")
+            window.location.replace('portal.html')
             // result.json()
         } else {
             alert(result.error)

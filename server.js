@@ -120,23 +120,23 @@ app.post('/api/logout', authenticateRoute, function (req, res) {
 	})
 });
 
-// app.get('/portal.html',authenticateRoute, function (req, res) {
-// 	console.log("token:",req.token)
-// 	console.log(jwt.verify(req.token, JWT_SECRET))
-// 	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
-// 		if (err){
-// 			console.log("Błąd autoryzacji")
-// 			res.redirect('/')
-// 		}else {
-// 			res.sendFile(path.join(__dirname,'./private/portal.html'));
-// 		}
-// 	})
-// });
-app.get('/portal.html', async (req, res) => {	
-	
-	res.sendFile(path.join(__dirname,'./private/portal.html'));
-
+app.get('/portal.html',authenticateRoute, function (req, res) {
+	console.log("token:",req.token)
+	console.log(jwt.verify(req.token, JWT_SECRET))
+	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
+		if (err){
+			console.log("Błąd autoryzacji")
+			res.redirect('/')
+		}else {
+			res.sendFile(path.join(__dirname,'./private/portal.html'));
+		}
+	})
 });
+// app.get('/portal.html', async (req, res) => {	
+	
+// 	res.sendFile(path.join(__dirname,'./private/portal.html'));
+
+// });
 
 app.post('/api/getEmail',authenticateRoute, function (req, res) {
 	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
@@ -175,6 +175,8 @@ function authenticateRoute(req,res,next){
 	const parsedCookie = bearerHead.split('=');
 	  	parsedCookies[parsedCookie[0]] = parsedCookie[1];
 	});
+
+	console.log(parsedCookies)
 
 	if(typeof parsedCookies[" id"] !== 'undefined'){
 		const bearerToken = parsedCookies[" id"]
