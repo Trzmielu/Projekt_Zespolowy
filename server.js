@@ -121,8 +121,11 @@ app.post('/api/logout', authenticateRoute, function (req, res) {
 });
 
 app.get('/portal.html',authenticateRoute, function (req, res) {
+	console.log("token:",req.token)
+	console.log(jwt.verify(req.token, JWT_SECRET))
 	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
 		if (err){
+			console.log("Błąd autoryzacji")
 			res.redirect('/')
 		}else {
 			res.sendFile(path.join(__dirname,'./private/portal.html'));
