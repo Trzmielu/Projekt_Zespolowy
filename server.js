@@ -126,6 +126,17 @@ app.get('/portal.html',authenticateRoute, function (req, res) {
 	})
 });
 
+app.post('/api/getEmail',authenticateRoute, function (req, res) {
+	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
+		if (err){
+			res.json({ status: 'error'})
+		}else {
+			const user = jwt.verify(req.token, JWT_SECRET)
+			res.json({ status: 'ok', email: user.email })
+		}
+	})
+});
+
 function authenticateRoute(req,res,next){
 	const bearerHeader = req.headers.cookie.split(';')
 	const parsedCookies = {};

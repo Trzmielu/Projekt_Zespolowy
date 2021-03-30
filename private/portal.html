@@ -13,7 +13,7 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 </head>
 
-<body>
+<body onload="LoadEmail()">
     <div id="wrapper">
         <div id="content">
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -22,6 +22,8 @@
                 </div>
                 <div id="title-buttons">
                 	 <div class="row">
+                        <div class="col" id='email_field' style="font-size:13px">
+                        </div>
                         <div class="col">
                             <input type='time' class='form-control' name='czas' required>
                         </div>
@@ -63,6 +65,23 @@
 
 
 <script type="text/javascript">
+    async function LoadEmail(){
+        const result = await fetch('/api/getEmail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((res) => res.json())
+
+        if(result.status === "ok"){
+            document.getElementById('email_field').innerHTML = "Welcome "+result.email
+        }
+        else{
+            alert(result.error)
+        }
+    }
+
+
     const logoutForm = document.getElementById('logoutForm')
     logoutForm.addEventListener('submit', LogoutUser)
 
