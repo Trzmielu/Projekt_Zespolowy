@@ -47,10 +47,10 @@ app.post('/api/login',  async (req, res) => {
 			JWT_SECRET
 		)
 		var newDate = new Date();
-	    var expDate = newDate.setMinutes(newDate.getMinutes() + 10)
+	    var expDate = new Date(newDate.getTime() + 10*60000)
 	    res.cookie('id' , token, { sameSite: true, maxAge: expDate });
 
-		return res.json({ status: 'ok', data: token})
+		return res.json({ status: 'ok', data: token, expDate})
 	}
 
 	res.json({ status: 'error', error: 'Niepoprawne dane!' })
@@ -88,10 +88,12 @@ app.post('/api/register', async (req, res) => {
 })
 
 app.post('/api/portal', authenticateRoute, function (req, res) {
+	console.log("token:",req.token)
 	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
 		if (err){
 			res.sendStatus(403)
 		}else {
+			console.log("Redirect do Portalu")
 			res.json({ status: 'ok' })
 		}
 	})
