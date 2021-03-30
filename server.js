@@ -176,13 +176,10 @@ function authenticateRoute(req,res,next){
 	  	parsedCookies[parsedCookie[0]] = parsedCookie[1];
 	});
 
-	console.log(parsedCookies)
-	console.log(parsedCookies['id'])
 	console.log(jwt.verify(parsedCookies['id'], JWT_SECRET))
-	console.log(jwt.verify(parsedCookies[' id'], JWT_SECRET))
 
-	if(typeof parsedCookies[" id"] !== 'undefined'){
-		const bearerToken = parsedCookies[" id"]
+	if(typeof parsedCookies["id"] !== 'undefined'){
+		const bearerToken = parsedCookies["id"]
 		req.token = bearerToken
 		next()
 	} else {
