@@ -97,6 +97,7 @@ app.post('/api/portal', authenticateRoute, function (req, res) {
 			res.json({ status: 'ok' })
 		}
 	})
+	console.log("Redirect do Portalu")
 });
 
 app.get('/api/portal',authenticateRoute, function (req, res) {
