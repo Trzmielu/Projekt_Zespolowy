@@ -6,6 +6,7 @@ const env = require('dotenv').config();
 const User = require('./model/user')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const MailSender = require('./middleware/mailbuider')
 
 const JWT_SECRET = 'sdawfawdfnbawikufbawifbvakwbfikuasbvdiuviwuavdi1232131!#@@!$1'
 
@@ -133,6 +134,25 @@ app.post('/api/getEmail',authenticateRoute, function (req, res) {
 		}else {
 			const user = jwt.verify(req.token, JWT_SECRET)
 			res.json({ status: 'ok', email: user.email })
+		}
+	})
+});
+
+app.post('/api/sendMail',authenticateRoute, function (req, res) {
+	jwt.verify(req.token, JWT_SECRET, (err, authData) => {
+		if (err){
+			res.json({ status: 'error'})
+		}else {
+			const user = jwt.verify(req.token, JWT_SECRET)
+			const { emailTo, time, quantity, dataText, subject} = req.body
+			try{
+				MailSender(user.email, emailTo, subject ,dataText)
+				console.log("Sending mail from",user.email,"to", emailTo,"Subject:", subject ,"Text:",dataText)
+			}
+			catch(e){
+				res.json({ status: 'error' })
+			}
+			res.json({ status: 'ok' })
 		}
 	})
 });

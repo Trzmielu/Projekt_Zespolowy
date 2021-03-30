@@ -24,14 +24,8 @@
                 	 <div class="row">
                         <div class="col" id='email_field' style="font-size:13px">
                         </div>
-                        <div class="col">
-                            <input type='time' class='form-control' name='czas' required>
-                        </div>
-    					<div class="col">
-                    		<input type='number' class='form-control' name='ilosc' placeholder='Quantity' required>
-                    	</div>
                     	<div class="col">
-		                    <button type="submit" class="form-control btn btn-primary">
+		                    <button type="submit" form="EmailForm" class="form-control btn btn-primary">
 		                        SEND
 		                    </button>
 		                </div>
@@ -47,15 +41,28 @@
             </nav>
             <div class="container-fluid" style="height: 700px">
                 <div id="content-box">
-                    <h5>E-mail address</h5>
-                    <input type="Email" class="form-control" name="email" placeholder="example@example.com" required>
-                    </br>
-                    <h5>Text</h5>
-                    <textarea class="form-control" name="text" placeholder="Your message..." rows='20' required></textarea>
-                    </br>
-                    <label for="Plik">Załączniki</label>
-                	</br>
-                    <input type="file" name='file 'class="form-control-file" id="Plik">
+                    <form id='EmailForm'>
+                        <h5>E-mail address</h5>
+                        <p style="font-size:11px; color:grey">spambotmailazure@gmail.com spambotmail7112</p>
+                        <input type="Email" class="form-control" name="email" id="emailTo" placeholder="example@example.com" >
+                        </br>
+                        <div class="row">
+                            <div class="col">
+                                <h5>Send Time</h5>
+                                <input type='time' disabled class='form-control' name='czas' id="time" >
+                            </div>
+                            <div class="col">
+                                <h5>Quantity</h5>
+                                <input type='number' disabled class='form-control' name='ilosc' id="quantity" placeholder='Quantity' >
+                            </div>
+                        </div>
+                        </br>
+                        <h5>Subject</h5>
+                        <input type="text" class="form-control" name="Subject" id="subject" placeholder="example@example.com" >
+                        </br>
+                        <h5>Text</h5>
+                        <textarea class="form-control" name="text" id="dataText" placeholder="Your message..." rows='18'></textarea>
+                    </form>
                 </div>
             </div>
         </div>
@@ -77,6 +84,38 @@
             document.getElementById('email_field').innerHTML = "Welcome "+result.email
         }
         else{
+            alert(result.error)
+        }
+    }
+
+    const EmailForm = document.getElementById('EmailForm')
+    EmailForm.addEventListener('submit', SendEmail)
+
+    async function SendEmail(event){
+        event.preventDefault()
+        const emailTo = document.getElementById('emailTo').value
+        const time = document.getElementById('time').value
+        const quantity = document.getElementById('quantity').value
+        const dataText = document.getElementById('dataText').value
+        const subject = document.getElementById('subject').value
+
+        const result = await fetch('/api/sendMail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                emailTo,
+                time,
+                quantity,
+                dataText,
+                subject
+            })
+        }).then((res) => res.json())
+
+        if(result.status === 'ok'){
+            alert('Email wysłany!')
+        } else {
             alert(result.error)
         }
     }
