@@ -109,10 +109,14 @@
         const subject = document.getElementById('subject').value
 
         var now = new Date();
-
-        var now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), time.getHours()-1, time.getMinutes());
+        if(time.getHours() == 0){
+            time.setHours(23)
+        }
+        else{
+            time.setHours(time.getHours()-1)
+        }
+        var now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), time.getHours(), time.getMinutes());
         time = now2.toUTCString()
-        console.log(time)
         const result = await fetch('/api/sendMail', {
             method: 'POST',
             headers: {
