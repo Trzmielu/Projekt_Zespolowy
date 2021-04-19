@@ -11,6 +11,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 
 <body onload="LoadEmail()">
@@ -49,7 +50,15 @@
                         <div class="row">
                             <div class="col">
                                 <h5>Send Time</h5>
-                                <input type='time' disabled class='form-control' name='czas' id="time" >
+                                <input type='time' class='form-control' name='czas' id="time" >
+                                <script>
+                                  $(document).ready( function() {
+                                      var now = new Date();
+                                      //now2 prevents the milliseconds from showing up in the input
+                                      var now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+2, now.getMinutes());
+                                      $('#time')[0].valueAsDate = now2;
+                                  });
+                                </script>
                             </div>
                             <div class="col">
                                 <h5>Quantity</h5>
@@ -94,11 +103,16 @@
     async function SendEmail(event){
         event.preventDefault()
         const emailTo = document.getElementById('emailTo').value
-        const time = document.getElementById('time').value
+        var time = document.getElementById('time').valueAsDate
         const quantity = document.getElementById('quantity').value
         const dataText = document.getElementById('dataText').value
         const subject = document.getElementById('subject').value
 
+        var now = new Date();
+
+        var now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), time.getHours()-1, time.getMinutes());
+        time = now2.toUTCString()
+        console.log(time)
         const result = await fetch('/api/sendMail', {
             method: 'POST',
             headers: {

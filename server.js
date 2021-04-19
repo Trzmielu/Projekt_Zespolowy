@@ -157,7 +157,7 @@ app.post('/api/sendMail',authenticateRoute, function (req, res) {
 			const user = jwt.verify(req.token, JWT_SECRET)
 			const { emailTo, time, quantity, dataText, subject} = req.body
 			try{
-				MailSender(user.email, emailTo, subject ,dataText)
+				MailSender(user.email, emailTo, subject ,dataText, time)
 				console.log("Sending mail from",user.email,"to", emailTo,"Subject:", subject ,"Text:",dataText)
 			}
 			catch(e){
@@ -175,8 +175,6 @@ function authenticateRoute(req,res,next){
 	const parsedCookie = bearerHead.split('=');
 	  	parsedCookies[parsedCookie[0]] = parsedCookie[1];
 	});
-
-	console.log(jwt.verify(parsedCookies['id'], JWT_SECRET))
 
 	if(typeof parsedCookies["id"] !== 'undefined'){
 		const bearerToken = parsedCookies["id"]
