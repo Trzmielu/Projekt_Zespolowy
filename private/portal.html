@@ -116,6 +116,9 @@
             time.setHours(time.getHours()-1)
         }
         var now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), time.getHours(), time.getMinutes());
+        if(now2.getTime() < now.getTime()){
+            now2 = now
+        }
         time = now2.toUTCString()
         const result = await fetch('/api/sendMail', {
             method: 'POST',
