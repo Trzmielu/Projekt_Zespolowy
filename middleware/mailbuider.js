@@ -9,7 +9,7 @@ async function MailSender(from, to, subject, text, deliverytime) {
     subject: subject,
     "o:deliverytime": deliverytime,
     template: "spambot",
-    'h:X-Mailgun-Variables': JSON.stringify({ subject: subject, text: text })
+    'h:X-Mailgun-Variables': JSON.stringify({ subject: subject, text: text, deliveryTime: deliverytime })
   };
   mg.messages().send(data, function (error, body) {
     console.log(body);
