@@ -117,7 +117,10 @@
         }
         var now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), time.getHours(), time.getMinutes());
         if(now2.getTime() < now.getTime()){
-            now2 = now
+            now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1, now2.getHours(), now2.getMinutes());
+        }
+        if(now2.getMinutes() == now.getMinutes() && now2.getHours() == now.getHours()){
+            now2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), time.getHours(), time.getMinutes());
         }
         time = now2.toUTCString()
         const result = await fetch('/api/sendMail', {
