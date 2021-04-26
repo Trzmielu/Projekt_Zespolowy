@@ -17,17 +17,17 @@
 ### https://spamboot.azurewebsites.net/
 
 ## Wdrożenie
-1. Utworzenie Azure App Service
+1. Utworzenie Azure App Service<br/>
 ![app](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/appservice.jpg?raw=true)
-2. Utworzenie bazy danych MongoDB
+2. Utworzenie bazy danych MongoDB<br/>
 ![db](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/db.jpg?raw=true)
-3. Dodanie odpowiedniego workflow oraz secretów do repozytorium
+3. Dodanie odpowiedniego workflow oraz secretów do repozytorium<br/>
 ![workflow](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/workflow.jpg?raw=true)
 ![secrets](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/secrets.jpg?raw=true)
-4. Push do repozytorium z aplikacją
-5. Deploy do Azure za pomocą Github Actions
+4. Push do repozytorium z aplikacją<br/>
+5. Deploy do Azure za pomocą Github Actions<br/>
 ![deploy](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/deploy.jpg?raw=true)
-6. Dodanie zmiennych środowiskowych do App Service
+7. Dodanie zmiennych środowiskowych do App Service<br/>
 ![env](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/env_var.jpg?raw=true)
 
 ## Testy Obciążeniowe
