@@ -30,6 +30,9 @@
 7. Dodanie zmiennych środowiskowych do App Service<br/>
 ![env](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/env_var.jpg?raw=true)
 
+## Template Maili
+![mail](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/mail.jpg?raw=true)
+
 ## Testy Obciążeniowe
 - GET /
 ![GET /](https://github.com/Trzmielu/Projekt_Zespolowy/blob/main/screenshots/GET%20home.png?raw=true)
